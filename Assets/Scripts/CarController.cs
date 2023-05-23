@@ -13,6 +13,7 @@ public class CarController : MonoBehaviour
     public WheelCollider Wheel_RF;
     public WheelCollider Wheel_LR;
     public WheelCollider Wheel_RR;
+    public static bool CanControl = false;
 
     void Start()
     {
@@ -21,30 +22,33 @@ public class CarController : MonoBehaviour
 
     void Update()
     {
-        power = Input.GetAxis("Vertical") * enginePower * Time.deltaTime * 450.0f;
-        steer = Input.GetAxis("Horizontal") * maxSteer;
-        brake = Input.GetKey("space") ? GetComponent<Rigidbody>().mass * 0.1f : 0.0f;
-
-        Wheel_LF.steerAngle = steer;
-        Wheel_RF.steerAngle = steer;
-
-        if (brake > 0.0)
+        if (CanControl)
         {
-            Wheel_LF.brakeTorque = brake;
-            Wheel_RF.brakeTorque = brake;
-            Wheel_LR.brakeTorque = brake;
-            Wheel_RR.brakeTorque = brake;
-            Wheel_LR.motorTorque = 0.0f;
-            Wheel_RR.motorTorque = 0.0f;
-        }
-        else
-        {
-            Wheel_LF.brakeTorque = 0;
-            Wheel_RF.brakeTorque = 0;
-            Wheel_LR.brakeTorque = 0;
-            Wheel_RR.brakeTorque = 0;
-            Wheel_LR.motorTorque = power;
-            Wheel_RR.motorTorque = power;
+            power = Input.GetAxis("Vertical") * enginePower * Time.deltaTime * 450.0f;
+            steer = Input.GetAxis("Horizontal") * maxSteer;
+            brake = Input.GetKey("space") ? GetComponent<Rigidbody>().mass * 0.1f : 0.0f;
+
+            Wheel_LF.steerAngle = steer;
+            Wheel_RF.steerAngle = steer;
+
+            if (brake > 0.0)
+            {
+                Wheel_LF.brakeTorque = brake;
+                Wheel_RF.brakeTorque = brake;
+                Wheel_LR.brakeTorque = brake;
+                Wheel_RR.brakeTorque = brake;
+                Wheel_LR.motorTorque = 0.0f;
+                Wheel_RR.motorTorque = 0.0f;
+            }
+            else
+            {
+                Wheel_LF.brakeTorque = 0;
+                Wheel_RF.brakeTorque = 0;
+                Wheel_LR.brakeTorque = 0;
+                Wheel_RR.brakeTorque = 0;
+                Wheel_LR.motorTorque = power;
+                Wheel_RR.motorTorque = power;
+            }
         }
     }
 }
