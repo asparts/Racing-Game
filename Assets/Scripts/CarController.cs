@@ -8,7 +8,7 @@ public class CarController : MonoBehaviour
     public float power = 0.0f;
     public float brake = 0.0f;
     public float steer = 0.0f;
-    public float maxSteer = 50.0f;
+    public float maxSteer = 80.0f;
     public WheelCollider Wheel_LF;
     public WheelCollider Wheel_RF;
     public WheelCollider Wheel_LR;
@@ -30,12 +30,22 @@ public class CarController : MonoBehaviour
             //Activating AI Car control as well
             AiCar01.GetComponent<UnityStandardAssets.Vehicles.Car.CarAIControl>().enabled = true;
 
-            power = Input.GetAxis("Vertical") * enginePower * Time.deltaTime * 450.0f;
-            steer = Input.GetAxis("Horizontal") * maxSteer;
-            brake = Input.GetKey("space") ? GetComponent<Rigidbody>().mass * 0.1f : 0.0f;
+            if (Input.GetAxis("Vertical") > 0)
+            {
+                power = Input.GetAxis("Vertical") * enginePower * Time.deltaTime * 650.0f;
 
-            if (power == 0 && steer == 0)
-                Input.ResetInputAxes();
+                Wheel_LR.motorTorque = power;
+                Wheel_RR.motorTorque = power;
+            }
+            else if(Input.GetAxis("Vertical") < 0)
+            {
+                power = Input.GetAxis("Vertical") * enginePower * Time.deltaTime * 650.0f;
+                Wheel_LR.motorTorque = power;
+                Wheel_RR.motorTorque = power;
+            }
+            
+            brake = Input.GetKeyDown(KeyCode.Space) ? GetComponent<Rigidbody>().mass * 0.3f : 0.0f;
+            steer = Input.GetAxis("Horizontal") * maxSteer;
 
             Wheel_LF.steerAngle = steer;
             Wheel_RF.steerAngle = steer;
