@@ -35,6 +35,10 @@ public class LapComplete : MonoBehaviour
 
         BestMilliSecondBox.GetComponent<Text>().text = "." + LapTimeManager.milliSeconds.ToString("F0");
 
+        PlayerPrefs.SetInt("MinSave", LapTimeManager.minutes);
+        PlayerPrefs.SetInt("SecSave", LapTimeManager.seconds);
+        PlayerPrefs.SetFloat("MilliSecSave", LapTimeManager.milliSeconds);
+
         LapTimeManager.milliSeconds = 0;
         LapTimeManager.seconds = 0;
         LapTimeManager.minutes = 0;
