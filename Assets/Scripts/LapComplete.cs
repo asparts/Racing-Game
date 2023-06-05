@@ -16,36 +16,42 @@ public class LapComplete : MonoBehaviour
     public GameObject LapCounter;
     public int laps = 0;
 
+    public float RawTime;
+
     private void OnTriggerEnter(Collider other)
     {
         laps++;
-        if (LapTimeManager.seconds <= 9)
+        RawTime = PlayerPrefs.GetFloat("RawTime");
+        if (LapTimeManager.RawTime <= this.RawTime)
         {
-            BestSecondBox.GetComponent<Text>().text = "0" + LapTimeManager.seconds + "";
-        }
-        else
-        {
-            BestSecondBox.GetComponent<Text>().text = LapTimeManager.seconds + "";
-        }
-        if (LapTimeManager.minutes <= 9)
-        {
-            BestMinuteBox.GetComponent<Text>().text = "0" + LapTimeManager.minutes + ".";
-        }
-        else
-        {
-            BestMinuteBox.GetComponent<Text>().text = LapTimeManager.minutes + ".";
-        }
+            if (LapTimeManager.seconds <= 9)
+            {
+                BestSecondBox.GetComponent<Text>().text = "0" + LapTimeManager.seconds + "";
+            }
+            else
+            {
+                BestSecondBox.GetComponent<Text>().text = LapTimeManager.seconds + "";
+            }
+            if (LapTimeManager.minutes <= 9)
+            {
+                BestMinuteBox.GetComponent<Text>().text = "0" + LapTimeManager.minutes + ".";
+            }
+            else
+            {
+                BestMinuteBox.GetComponent<Text>().text = LapTimeManager.minutes + ".";
+            }
 
-        BestMilliSecondBox.GetComponent<Text>().text = "." + LapTimeManager.milliSeconds.ToString("F0");
-
+            BestMilliSecondBox.GetComponent<Text>().text = "." + LapTimeManager.milliSeconds.ToString("F0");
+        }
         PlayerPrefs.SetInt("MinSave", LapTimeManager.minutes);
         PlayerPrefs.SetInt("SecSave", LapTimeManager.seconds);
         PlayerPrefs.SetFloat("MilliSecSave", LapTimeManager.milliSeconds);
+        PlayerPrefs.SetFloat("RawTime", LapTimeManager.RawTime);
 
         LapTimeManager.milliSeconds = 0;
         LapTimeManager.seconds = 0;
         LapTimeManager.minutes = 0;
-
+        LapTimeManager.RawTime = 0;
         LapCounter.GetComponent<Text>().text = "" + laps;
 
         LapHalfTrig.SetActive(true);

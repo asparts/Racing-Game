@@ -15,10 +15,13 @@ public class LapTimeManager : MonoBehaviour
     public GameObject SecondBox;
     public GameObject MilliSecondBox;
 
+    public static float RawTime;
+
     // Update is called once per frame
     void Update()
     {
         milliSeconds += Time.deltaTime * 10;
+        RawTime += Time.deltaTime;
         milliSecondsDisplay = milliSeconds.ToString("F0");
         MilliSecondBox.GetComponent<Text>().text = "" + milliSecondsDisplay;
 

@@ -44,7 +44,7 @@ public class CarController : MonoBehaviour
                 Wheel_RR.motorTorque = power;
             }
             
-            brake = Input.GetKeyDown(KeyCode.Space) ? GetComponent<Rigidbody>().mass * 0.3f : 0.0f;
+            brake = Input.GetKey(KeyCode.Space) ? GetComponent<Rigidbody>().mass * 10.0f : 0.0f;
             steer = Input.GetAxis("Horizontal") * maxSteer;
 
             Wheel_LF.steerAngle = steer;
