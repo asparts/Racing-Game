@@ -13,9 +13,12 @@ public class LapComplete : MonoBehaviour
     public GameObject BestMilliSecondBox;
 
     public GameObject LapTimeBox;
+    public GameObject LapCounter;
+    public int laps = 0;
 
     private void OnTriggerEnter(Collider other)
     {
+        laps++;
         if (LapTimeManager.seconds <= 9)
         {
             BestSecondBox.GetComponent<Text>().text = "0" + LapTimeManager.seconds + "";
@@ -42,6 +45,8 @@ public class LapComplete : MonoBehaviour
         LapTimeManager.milliSeconds = 0;
         LapTimeManager.seconds = 0;
         LapTimeManager.minutes = 0;
+
+        LapCounter.GetComponent<Text>().text = "" + laps;
 
         LapHalfTrig.SetActive(true);
         LapCompleteTrig.SetActive(false);
