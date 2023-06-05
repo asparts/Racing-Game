@@ -14,9 +14,19 @@ public class LapComplete : MonoBehaviour
 
     public GameObject LapTimeBox;
     public GameObject LapCounter;
+    public GameObject RaceFinish;
     public int laps = 0;
+    public int maxLaps = 2;
 
     public float RawTime;
+
+    private void Update()
+    {
+        if (laps == maxLaps)
+        {
+            RaceFinish.SetActive(true);
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {

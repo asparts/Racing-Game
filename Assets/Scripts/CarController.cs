@@ -25,6 +25,17 @@ public class CarController : MonoBehaviour
 
     void Update()
     {
+        if (!CanControl)
+        {
+            brake = GetComponent<Rigidbody>().mass * 10.0f;
+            Wheel_LR.motorTorque = 0.0f;
+            Wheel_RR.motorTorque = 0.0f;
+            Wheel_LF.brakeTorque = brake;
+            Wheel_RF.brakeTorque = brake;
+            Wheel_LR.brakeTorque = brake;
+            Wheel_RR.brakeTorque = brake;
+        }
+
         if (CanControl)
         {
             //Activating AI Car control as well
