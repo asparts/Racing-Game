@@ -8,6 +8,7 @@ public class Countdown : MonoBehaviour
     public GameObject CountdownTime;
     public GameObject LapTimer;
     public AudioSource CountdownAudio;
+    public AudioSource LevelMusic;
 
 
     // Start is called before the first frame update
@@ -36,5 +37,6 @@ public class Countdown : MonoBehaviour
         CountdownAudio.Play();
         LapTimer.SetActive(true);
         CarController.CanControl = true;
+        LevelMusic.Play();
     }
 }

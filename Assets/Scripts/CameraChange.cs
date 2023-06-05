@@ -9,6 +9,7 @@ public class CameraChange : MonoBehaviour
     public GameObject FirstPersonCamera;
     public GameObject RearCamera;
 
+
     public int CameraMode = 0;
 
     void Update()
