@@ -41,28 +41,30 @@ public class CarController : MonoBehaviour
             //Activating AI Car control as well
             AiCar01.GetComponent<UnityStandardAssets.Vehicles.Car.CarAIControl>().enabled = true;
 
-            if (Input.GetAxis("Vertical") > 0)
+            if (Input.GetKey(KeyCode.W))
             {
-                power = Input.GetAxis("Vertical") * enginePower * Time.deltaTime * 650.0f;
+                power = enginePower * Time.deltaTime * 650.0f;
 
                 Wheel_LR.motorTorque = power;
                 Wheel_RR.motorTorque = power;
+                Wheel_LF.brakeTorque = 0;
+                Wheel_RF.brakeTorque = 0;
+                Wheel_LR.brakeTorque = 0;
+                Wheel_RR.brakeTorque = 0;
             }
-            else if(Input.GetAxis("Vertical") < 0)
+            else if (Input.GetKey(KeyCode.S))
             {
-                power = Input.GetAxis("Vertical") * enginePower * Time.deltaTime * 650.0f;
+                power = -enginePower * Time.deltaTime * 650.0f;
                 Wheel_LR.motorTorque = power;
                 Wheel_RR.motorTorque = power;
+                Wheel_LF.brakeTorque = 0;
+                Wheel_RF.brakeTorque = 0;
+                Wheel_LR.brakeTorque = 0;
+                Wheel_RR.brakeTorque = 0;
             }
-            
-            brake = Input.GetKey(KeyCode.Space) ? GetComponent<Rigidbody>().mass * 10.0f : 0.0f;
-            steer = Input.GetAxis("Horizontal") * maxSteer;
-
-            Wheel_LF.steerAngle = steer;
-            Wheel_RF.steerAngle = steer;
-
-            if (brake > 0.0)
+            else if (Input.GetKey(KeyCode.Space))
             {
+                brake = GetComponent<Rigidbody>().mass * 15.0f;
                 Wheel_LF.brakeTorque = brake;
                 Wheel_RF.brakeTorque = brake;
                 Wheel_LR.brakeTorque = brake;
@@ -70,15 +72,53 @@ public class CarController : MonoBehaviour
                 Wheel_LR.motorTorque = 0.0f;
                 Wheel_RR.motorTorque = 0.0f;
             }
+            //else if (Input.GetKey(KeyCode.A))
+            //{
+            //    Wheel_LF.steerAngle = -maxSteer;
+            //}
+            //else if (Input.GetKey(KeyCode.D))
+            //{
+            //    Wheel_RF.steerAngle = maxSteer;
+            //}
             else
             {
-                Wheel_LF.brakeTorque = 0;
-                Wheel_RF.brakeTorque = 0;
-                Wheel_LR.brakeTorque = 0;
-                Wheel_RR.brakeTorque = 0;
-                Wheel_LR.motorTorque = power;
-                Wheel_RR.motorTorque = power;
+                Debug.Log("ELSE!");
+                brake = GetComponent<Rigidbody>().mass * 2.0f;
+                Wheel_LF.brakeTorque = brake;
+                Wheel_RF.brakeTorque = brake;
+                Wheel_LR.brakeTorque = brake;
+                Wheel_RR.brakeTorque = brake;
+                Wheel_LR.motorTorque = 0.0f;
+                Wheel_RR.motorTorque = 0.0f;
+                Wheel_LF.motorTorque = 0.0f;
+                Wheel_RF.motorTorque = 0.0f;
+                power = 0;
             }
+            
+            ////brake = Input.GetKey(KeyCode.Space) ? GetComponent<Rigidbody>().mass * 10.0f : 0.0f;
+            steer = Input.GetAxisRaw("Horizontal") * maxSteer;
+            Wheel_LF.steerAngle = steer;
+            Wheel_RF.steerAngle = steer;
+
+
+            //if (brake > 0.0)
+            //{
+            //    Wheel_LF.brakeTorque = brake;
+            //    Wheel_RF.brakeTorque = brake;
+            //    Wheel_LR.brakeTorque = brake;
+            //    Wheel_RR.brakeTorque = brake;
+            //    Wheel_LR.motorTorque = 0.0f;
+            //    Wheel_RR.motorTorque = 0.0f;
+            //}
+            //else
+            //{
+            //    Wheel_LF.brakeTorque = 0;
+            //    Wheel_RF.brakeTorque = 0;
+            //    Wheel_LR.brakeTorque = 0;
+            //    Wheel_RR.brakeTorque = 0;
+            //    Wheel_LR.motorTorque = power;
+            //    Wheel_RR.motorTorque = power;
+            //}
         }
     }
 }
