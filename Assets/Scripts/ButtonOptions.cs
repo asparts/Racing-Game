@@ -29,5 +29,8 @@ public class ButtonOptions : MonoBehaviour
     {
         SceneManager.LoadScene(5);
     }
-
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
